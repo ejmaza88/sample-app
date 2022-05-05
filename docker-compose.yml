@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  main-app:
+    build : ./
+    image: sample-app
+    command: /bin/zsh
+    volumes: 
+      - ./:/sample-app
+    networks:
+      - redis_net
+    depends_on:
+      - redis-db
+
+  redis-db:
+    image: redis:6.2.7-alpine
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - redis_net
+
+networks:
+  redis_net:
+
+volumes:
+  redis-data:
