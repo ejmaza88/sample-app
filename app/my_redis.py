@@ -1,7 +1,7 @@
 import redis
 
 r = redis.Redis(
-    host='redis-db',
+    host='redis',
     password='foobared',
     port='6379'
 )

@@ -3,6 +3,6 @@
 .pyc
 
 .redis
-pg-backups
-pg-data
+db-backups
+db-data
 redis-data

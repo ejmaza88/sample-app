@@ -9,22 +9,40 @@ services:
       - ./:/sample-app
     networks:
       - redis_net
+      - db_net
     depends_on:
-      - redis-db
+      - redis
+      - db
 
-  redis-db:
+  redis:
     image: redis:6.2.7-alpine
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
-      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis-config/redis.conf:/usr/local/etc/redis/redis.conf
       - ./redis-data:/data
     ports:
       - "6379:6379"
     networks:
       - redis_net
 
+  db:
+    image: postgres:14.2-alpine3.15 
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: siridog
+    volumes:
+      - ./db-data:/var/lib/postgresql
+      - ./db-backups:/db-backups
+    ports:
+      - "5431:5432"
+    networks:
+      - db_net
+
 networks:
   redis_net:
+  db_net:
 
 volumes:
   redis-data:
+  db-data:
+

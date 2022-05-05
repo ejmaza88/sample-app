@@ -8,7 +8,10 @@ main-app:
 	@docker compose run -d main-app
 
 redis-db:
-	@docker compose up -d redis-db
+	@docker compose up -d redis
+
+db:
+	@docker compose up -d db
 
 shell:
 	@docker compose run -d redis-test
