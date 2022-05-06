@@ -1,7 +1,7 @@
 import psycopg2
 
 # Connect to your postgres DB
-conn = psycopg2.connect("dbname=dvd_rental user=root password=siridog host=db")
+conn = psycopg2.connect("dbname=sample_app user=root password=siridog host=db")
 
 # Open a cursor to perform database operations
 cur = conn.cursor()

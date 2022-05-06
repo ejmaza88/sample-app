@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  main-app:
+  sample-app:
     build : ./
     image: sample-app
     command: /bin/zsh
@@ -27,14 +27,17 @@ services:
 
   db:
     image: postgres:14.2-alpine3.15 
+    restart: always
     environment:
+      POSTGRES_DB: sample_app
       POSTGRES_USER: root
       POSTGRES_PASSWORD: siridog
     volumes:
       - ./db-data:/var/lib/postgresql
       - ./db-backups:/db-backups
+      - ./db-backups/sample_app.sql.gz:/docker-entrypoint-initdb.d/sample_app.sql.gz
     ports:
-      - "5431:5432"
+      - "5432:5432"
     networks:
       - db_net
 

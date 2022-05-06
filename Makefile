@@ -4,8 +4,8 @@ docker_build:
 list_all:
 	@scripts/list_all.sh
 
-main-app:
-	@docker compose run -d main-app
+sample-app:
+	@docker compose run -d sample-app
 
 redis-db:
 	@docker compose up -d redis

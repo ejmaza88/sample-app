@@ -4,3 +4,9 @@
 
 db-data
 redis-data
+
+venv
+.venv
+
+__pycache__
+
