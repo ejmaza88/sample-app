@@ -29,36 +29,17 @@ services:
     image: postgres:14.2-alpine3.15 
     restart: always
     environment:
-      POSTGRES_DB: fake_project
+      POSTGRES_DB: sample_app
       POSTGRES_USER: root
       POSTGRES_PASSWORD: siridog
     volumes:
       - ./containers/db-data:/var/lib/postgresql
+      - ./containers/db-backups:/db-backups
+      - ./containers/db-backups/sample_app.sql.gz:/docker-entrypoint-initdb.d/sample_app.sql.gz
     ports:
       - "5432:5432"
     networks:
       - db_net
-
-  django:
-    build: ./
-    image: django
-    command: >
-      sh -c "python manage.py makemigrations && 
-             python manage.py migrate && 
-             python manage.py runserver 0.0.0.0:8000"
-    environment:
-      DB_HOST: db
-      DB_NAME: fake_project
-      DB_USER: root
-      DB_PASSWORD: siridog
-    volumes:
-      - ./fakeproject:/fakeproject
-    networks:
-      - db_net
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
 
 networks:
   redis_net:

@@ -2,8 +2,8 @@
 .idea
 .pyc
 
-db-data
-redis-data
+containers/db-data
+containers/redis-data
 
 venv
 .venv

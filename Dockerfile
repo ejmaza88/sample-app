@@ -10,13 +10,13 @@ RUN apt update && \
     python3-setuptools \
     python3-wheel
 
-RUN mkdir -p /sample-app
+RUN mkdir -p /fakeproject
 
-WORKDIR /sample-app
+WORKDIR /fakeproject
 
 COPY requirements.txt requirements.txt
 
-COPY ./ /sample-app/
+COPY ./fakeproject /fakeproject/
 
 RUN pip install -U pip
 RUN pip install -r requirements.txt

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t sample-app .
+docker build -t django .
 
