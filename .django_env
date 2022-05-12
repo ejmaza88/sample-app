@@ -1,4 +1,4 @@
 #!/bin/zsh
 
 export DJANGO_SETTINGS_MODULE="fakeproject.settings"
-export PYTHONPATH="$HOME/Development/apps/temp/sample-app:$PYTHONPATH"
+export PYTHONPATH="$PWD:$PYTHONPATH"

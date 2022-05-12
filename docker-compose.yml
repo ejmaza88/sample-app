@@ -19,7 +19,14 @@ x-service: &default-service
     networks:
       - db_net
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+
+x-service: &default-node
+    image: node:14.19.1-alpine3.14
+    working_dir: /fakeproject
+    volumes:
+      - ./fakeproject:/fakeproject
 
 services:
   django-server:
@@ -64,15 +71,24 @@ services:
       - "5431:5432"
     networks:
       - db_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  node-watch:
-    image: node:14.19.1-alpine3.14
+  npm-watch:
+    <<: *default-node
     command: npm run watch
-    working_dir: /fakeproject
     ports:
       - "7654:7654"
-    volumes:
-      - ./fakeproject:/fakeproject
+    depends_on:
+      npm-install:
+        condition: service_completed_successfully 
+
+  npm-install:
+    <<: *default-node
+    command: npm install
 
 networks:
   redis_net:

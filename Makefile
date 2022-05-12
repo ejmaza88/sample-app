@@ -1,8 +1,5 @@
-docker_build:
-	@scripts/docker_build.sh
-
-django:
-	@docker compose up django
+docker-build:
+	@docker build -t django-app .
 
 django-server:
 	@docker compose up django-server
@@ -16,16 +13,9 @@ django-migrate:
 db:
 	@docker compose up -d db
 
-redis-db:
+redis:
 	@docker compose up -d redis
 
-node-watch:
-	@docker compose up node-watch
+npm-watch:
+	@docker compose up npm-watch
 
-
-# other commands, deal with them later
-list_all:
-	@scripts/list_all.sh
-
-run:
-	@scripts/run_shell.sh $@

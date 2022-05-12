@@ -5,4 +5,5 @@ MESSAGE="Hello World"
 
 echo $SCRIPT_PATH
 echo $MESSAGE
+echo pwd
 
