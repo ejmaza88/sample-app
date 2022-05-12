@@ -19,8 +19,8 @@ db:
 redis-db:
 	@docker compose up -d redis
 
-node:
-	@docker compose up -d node
+node-watch:
+	@docker compose up node-watch
 
 
 # other commands, deal with them later

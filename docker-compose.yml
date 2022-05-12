@@ -13,7 +13,7 @@ x-service: &default-service
       DJANGO_SU_PASSWORD: secret
     restart: "no"
     env_file:
-      - .env
+      - .django_env
     volumes:
       - ./fakeproject:/fakeproject
     networks:
@@ -65,35 +65,14 @@ services:
     networks:
       - db_net
 
-  node:
+  node-watch:
     image: node:14.19.1-alpine3.14
-    entrypoint: /bin/bash
+    command: npm run watch
+    working_dir: /fakeproject
+    ports:
+      - "7654:7654"
     volumes:
       - ./fakeproject:/fakeproject
-
-  # django:
-  #   build: ./
-  #   image: django-app
-  #   command: >
-  #     sh -c "python manage.py migrate &&
-  #            python manage.py runserver 0.0.0.0:8000"
-  #   environment:
-  #     DB_HOST: db
-  #     DB_NAME: fake_project
-  #     DB_USER: root
-  #     DB_PASSWORD: siridog
-  #     DJANGO_SU_NAME: admin
-  #     DJANGO_SU_EMAIL: admin@mail.com
-  #     DJANGO_SU_PASSWORD: SuperSecret@123
-  #   volumes:
-  #     - ./fakeproject:/fakeproject
-  #   networks:
-  #     - db_net
-  #   ports:
-  #     - "8000:8000"
-  #   depends_on:
-  #     - db
-  #
 
 networks:
   redis_net:
