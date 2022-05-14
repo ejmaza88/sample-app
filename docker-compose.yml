@@ -1,7 +1,9 @@
 version: "3.9"
 
 x-service: &default-service
-    build: ./
+    build:
+      context: .
+      target: django
     image: django-app
     environment:
       DB_HOST: db

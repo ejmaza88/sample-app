@@ -1,0 +1,4 @@
+REPOSITORY   TAG                  IMAGE ID       CREATED        SIZE
+django-app   latest               6408abd5d612   26 hours ago   648MB
+node         14.19.1-alpine3.14   cfe2e7dc0563   5 weeks ago    119MB
+postgres     14.2-alpine3.15      ebf01b748a56   5 weeks ago    211MB
