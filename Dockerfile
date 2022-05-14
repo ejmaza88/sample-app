@@ -1,5 +1,4 @@
 FROM python:3.9.12-slim-buster AS django-base
-
 RUN apt update \
     && apt upgrade -y \
     && apt install -y \
@@ -20,10 +19,12 @@ COPY ./fakeproject /fakeproject/
 RUN pip install -r requirements.txt
 
 
-FROM python:3.9.12-slim-buster AS django-server
+FROM python:3.9.12-slim-buster AS django
 COPY --from=django-builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=django-builder /usr/local/bin/ /usr/local/bin/
 
-FROM django-server AS django
+
+FROM django AS django-server
 WORKDIR /fakeproject
-CMD ["/bin/bash"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+

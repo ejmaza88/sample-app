@@ -1,10 +1,11 @@
 version: "3.9"
 
-x-service: &default-service
+x-service: &default-django
     build:
       context: .
-      target: django
     image: django-app
+    env_file:
+      - .django_env
     environment:
       DB_HOST: db
       DB_NAME: fake_project
@@ -14,8 +15,7 @@ x-service: &default-service
       DJANGO_SU_EMAIL: admin@mail.com
       DJANGO_SU_PASSWORD: secret
     restart: "no"
-    env_file:
-      - .django_env
+    working_dir: /fakeproject
     volumes:
       - ./fakeproject:/fakeproject
     networks:
@@ -32,7 +32,10 @@ x-service: &default-node
 
 services:
   django-server:
-    <<: *default-service
+    <<: *default-django
+    build:
+      context: ./
+      target: django-server
     entrypoint: django-admin runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
@@ -43,11 +46,11 @@ services:
         condition: service_completed_successfully
 
   django-shell:
-    <<: *default-service
+    <<: *default-django
     command: django-admin shell
 
   migrate:
-    <<: *default-service
+    <<: *default-django
     command: python manage.py migrate
 
   redis:
